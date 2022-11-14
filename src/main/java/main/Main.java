@@ -10,13 +10,6 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-echo "# TestRepo" >> README.md
-        git init
-        git add README.md
-        git commit -m "first commit"
-        git branch -M main
-        git remote add origin https://github.com/andrejadikic/TestRepo.git
-        git push -u origin main
 
 public class Main {
 
