@@ -20,8 +20,8 @@ public class Main {
 
         Class.forName(drive);
         FileManager fileLocal = RepoManager.getRepo();
-        fileLocal.createRoot("/Users/andrejadikic/Documents/SKProjekat","root",new Configuration(),8);
-        File file = new File("/Users/andrejadikic/Documents/SKProjekat");
-        fileLocal.mkdir("","dir1",7,true);
+        fileLocal.createRoot("", "probaRoot");
+        fileLocal.mkdir("", "dir",7, false);
+
     }
 }
