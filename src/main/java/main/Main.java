@@ -13,6 +13,9 @@ public class Main {
     private static String drive = "paket.GoogleDriveImpl";
     private static String menuOptions;
     private static String createRootOptions;
+    private static String mkdirOptions;
+    private static String filterOptions;
+
     private static Scanner sc;
     private static FileManager fileManager;
 
@@ -29,28 +32,56 @@ public class Main {
         menuOptions();
         int opt;
         while ((opt = getOption(19, menuOptions)) != 19){
+            String line;
             switch (opt){
                 case 1:
                     opt = getOption(4, createRootOptions);
-                    switch (opt){
-                        case 1:
-                            String[] strings = getStringString();
-                            fileManager.createRoot(strings[0],strings[1]);
+                    line = sc.nextLine();
+                    switch (opt) {
+                        case 1 -> fileManager.createRoot(getStringString(line)[0], getStringString(line)[1]);
+                        case 2 -> fileManager.createRoot((String) getStringStringInt(line).get(0), (String) getStringStringInt(line).get(0), (Integer) getStringStringInt(line).get(0));
+                        case 3 -> fileManager.createRoot()
                     }
-
                     break;
+
                 case 5:
-                    String[] strings = getStringString();
-                    fileManager.download(strings[0],strings[1]);
+                    fileManager.download(getStringString(line)[0],getStringString(line)[1]);
                 default:
                     break;
             }
         }
 
     }
-    private static String[] getStringString(){
-        String s1 = sc.nextLine();
-        return s1.split(",");
+    private static String[] getStringString(String line){
+        return line.split(",");
+    }
+    private static List<Object> getStringStringInt(String line){
+        String[] s = line.split(",");
+        List<Object> list = new ArrayList<>();
+        list.add(s[0]);
+        list.add(s[1]);
+        try{
+            list.add(Integer.parseInt(s[2]));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    private static List<Object> getStringStringLongList(String line){
+        String[] s = line.split(",");
+        List<Object> list = new ArrayList<>();
+        list.add(s[0]);
+        list.add(s[1]);
+        try{
+            list.add(Long.parseLong(s[2]));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        String[] ext = s[3].split(";");
+
+
+        return list;
     }
 
 
@@ -113,19 +144,30 @@ public class Main {
         menuOptions =  sb.toString();
 
         sb = new StringBuilder();
-        sb.append("Mkdir:\n");
+        sb.append("CreateRoot:\n");
         sb.append("1. String path, String name\n");
         sb.append("2. String path, String name, int numberOfFilesConstraint\n");
-        sb.append("3. String path,String name, Configuration configuration\n");
-        sb.append("4. String path, String name, Configuration configuration, int numberOfFilesConstraint\n");
+        sb.append("3. String path,String name, Configuration configuration<Long size,List<String> extenstions divided by ; >\n");
+        sb.append("4. String path, String name, Configuration configuration<Long size,List<String> extenstions divided by ;>, int numberOfFilesConstraint\n");
         createRootOptions = sb.toString();
 
         sb = new StringBuilder();
         sb.append("Mkdir:\n");
         sb.append("1. String path, String name\n");
-        sb.append("2. String path, String name, int numberOfFilesConstraint\n");
-        sb.append("3. String path,String name, Configuration configuration\n");
-        sb.append("4. String path, String name, Configuration configuration, int numberOfFilesConstraint\n");
+        sb.append("2. String path, List<String> names divided by ;\n");
+        sb.append("3. String path, List<String> names divided by ; ,int file_n\n");
+        sb.append("4. String path, String name, int n, boolean file_n (true if it is constraint)\n");
+        sb.append("5. String path, String name, int n, int file_n\n");
+        sb.append("6. String name\n");
+        sb.append("7. List<String> names\n");
+        sb.append("8. String name, int n\n");
+        mkdirOptions = sb.toString();
+
+        sb = new StringBuilder();
+        sb.append("Filter by extension:\n");
+        sb.append("1. String path, String ext\n");
+        sb.append("2. String ext\n");
+        filterOptions = sb.toString();
     }
 
 }
