@@ -1,4 +1,7 @@
 package main;
+import paket.FileManager;
+import paket.RepoManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +14,7 @@ public class Main {
     private static String menuOptions;
     private static String createRootOptions;
     private static Scanner sc;
+    private static FileManager fileManager;
 
     public static void main(String[] args){
 
@@ -18,6 +22,7 @@ public class Main {
         String fileSystem = getStorage();
         try {
             Class.forName(fileSystem);
+            fileManager = RepoManager.getRepo();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -27,14 +32,26 @@ public class Main {
             switch (opt){
                 case 1:
                     opt = getOption(4, createRootOptions);
+                    switch (opt){
+                        case 1:
+                            String[] strings = getStringString();
+                            fileManager.createRoot(strings[0],strings[1]);
+                    }
+
                     break;
+                case 5:
+                    String[] strings = getStringString();
+                    fileManager.download(strings[0],strings[1]);
                 default:
                     break;
             }
         }
 
     }
-
+    private static String[] getStringString(){
+        String s1 = sc.nextLine();
+        return s1.split(",");
+    }
 
 
     private static int getOption(int maxNum, String messageOptions){
@@ -102,6 +119,13 @@ public class Main {
         sb.append("3. String path,String name, Configuration configuration\n");
         sb.append("4. String path, String name, Configuration configuration, int numberOfFilesConstraint\n");
         createRootOptions = sb.toString();
+
+        sb = new StringBuilder();
+        sb.append("Mkdir:\n");
+        sb.append("1. String path, String name\n");
+        sb.append("2. String path, String name, int numberOfFilesConstraint\n");
+        sb.append("3. String path,String name, Configuration configuration\n");
+        sb.append("4. String path, String name, Configuration configuration, int numberOfFilesConstraint\n");
     }
 
 }
