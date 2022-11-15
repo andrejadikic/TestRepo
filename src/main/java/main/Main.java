@@ -8,44 +8,49 @@ public class Main {
 
     private static String local = "filelocal.FileLocalImpl";
     private static String drive = "paket.GoogleDriveImpl";
-    private static List<Integer> options;
     private static String menuOptions;
+    private static String createRootOptions;
+    private static Scanner sc;
 
     public static void main(String[] args){
 
-        Scanner sc = new Scanner(System.in);
-        String fileSystem = getStorage(sc);
+        sc = new Scanner(System.in);
+        String fileSystem = getStorage();
         try {
             Class.forName(fileSystem);
         }catch (Exception e){
             e.printStackTrace();
         }
-        fillOptions();
-        System.out.println(menuOptions);
+        menuOptions();
         int opt;
-        while ((opt = getOption(sc)) != 19){
-            System.out.println("Option: " + opt);
-            System.out.println(menuOptions);
+        while ((opt = getOption(19, menuOptions)) != 19){
+            switch (opt){
+                case 1:
+                    opt = getOption(4, createRootOptions);
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
 
 
 
-    private static int getOption(Scanner sc){
-        menuOptions();
-        int opt = chooseOption(sc.nextLine());
+    private static int getOption(int maxNum, String messageOptions){
+        System.out.println(messageOptions);
+        int opt = chooseOption(sc.nextLine(), 19);
         while(opt == -1){
             System.out.println("Please enter valid number!");
-            opt = chooseOption(sc.nextLine());
+            opt = chooseOption(sc.nextLine(), 19);
         }
         return opt;
     }
 
-    private static int chooseOption(String str){
+    private static int chooseOption(String str, int maxNum){
         try {
             int i = Integer.parseInt(str);
-            if(!options.contains(i))
+            if(i < 1 && i > maxNum)
                 return -1;
             return i;
         }catch (Exception e){
@@ -53,35 +58,18 @@ public class Main {
         }
     }
 
-    private static String getStorage(Scanner sc){
+    private static String getStorage(){
         System.out.println("1. Local file system\n2. Google Drive");
-        int opt = chooseStorage(sc.nextLine());
+        int opt = chooseOption(sc.nextLine(),2);
         while(opt != 1 && opt != 2){
             System.out.println("Please enter 1 or 2");
-            opt = chooseStorage(sc.nextLine());
+            opt = chooseOption(sc.nextLine(),2);
         }
         if(opt == 1)
             return local;
         return drive;
     }
 
-    private static int chooseStorage(String str){
-        try {
-            int i = Integer.parseInt(str);
-            if(i != 1 && i != 2)
-                return -1;
-            return i;
-        }catch (Exception e){
-            return -1;
-        }
-    }
-
-    private static void fillOptions(){
-        options = new ArrayList<>();
-        for(int i=1; i <= 19; i++)
-            options.add(i);
-        menuOptions();
-    }
 
     // TODO na izlasku odraditi save config
     private static void menuOptions(){
@@ -106,5 +94,14 @@ public class Main {
         sb.append("18. filter by period\n");
         sb.append("19. exit\n");
         menuOptions =  sb.toString();
+
+        sb = new StringBuilder();
+        sb.append("Mkdir:\n");
+        sb.append("1. String path, String name\n");
+        sb.append("2. String path, String name, int numberOfFilesConstraint\n");
+        sb.append("3. String path,String name, Configuration configuration\n");
+        sb.append("4. String path, String name, Configuration configuration, int numberOfFilesConstraint\n");
+        createRootOptions = sb.toString();
     }
+
 }
