@@ -1,10 +1,9 @@
 package main;
+import paket.Configuration;
 import paket.FileManager;
 import paket.RepoManager;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Main {
@@ -39,12 +38,16 @@ public class Main {
                     line = sc.nextLine();
                     switch (opt) {
                         case 1 -> fileManager.createRoot(getStringString(line)[0], getStringString(line)[1]);
-                        case 2 -> fileManager.createRoot((String) getStringStringInt(line).get(0), (String) getStringStringInt(line).get(0), (Integer) getStringStringInt(line).get(0));
-                        case 3 -> fileManager.createRoot()
+                        case 2 -> fileManager.createRoot((String) getStringStringInt(line).get(0), (String) getStringStringInt(line).get(1), (Integer) getStringStringInt(line).get(2));
+                        case 3 -> fileManager.createRoot((String) getStringStringLongSet(line).get(0), (String) getStringStringLongSet(line).get(1),
+                                new Configuration((Long) getStringStringLongSet(line).get(2),(Set<String>)getStringStringLongSet(line).get(3)));
+                        case 4 -> fileManager.createRoot((String) getStringStringLongSetInt(line).get(0),(String) getStringStringLongSetInt(line).get(1),new Configuration((Long) getStringStringLongSetInt(line).get(2),(Set<String>) getStringStringLongSetInt(line).get(3)),(Integer) getStringStringLongSetInt(line).get(4));
                     }
+                    fileManager.saveConfig();
                     break;
 
                 case 5:
+                    line = sc.nextLine();
                     fileManager.download(getStringString(line)[0],getStringString(line)[1]);
                 default:
                     break;
@@ -68,7 +71,7 @@ public class Main {
 
         return list;
     }
-    private static List<Object> getStringStringLongList(String line){
+    private static List<Object> getStringStringLongSet(String line){
         String[] s = line.split(",");
         List<Object> list = new ArrayList<>();
         list.add(s[0]);
@@ -79,11 +82,27 @@ public class Main {
             e.printStackTrace();
         }
         String[] ext = s[3].split(";");
-
-
+        Set<String> extensions = new HashSet<>(List.of(ext));
+        list.add(extensions);
         return list;
     }
 
+    private static List<Object> getStringStringLongSetInt(String line){
+        String[] s = line.split(",");
+        List<Object> list = new ArrayList<>();
+        list.add(s[0]);
+        list.add(s[1]);
+        try{
+            list.add(Long.parseLong(s[2]));
+            String[] ext = s[3].split(";");
+            Set<String> extensions = new HashSet<>(List.of(ext));
+            list.add(extensions);
+            list.add(Integer.parseInt(s[4]));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     private static int getOption(int maxNum, String messageOptions){
         System.out.println(messageOptions);
@@ -147,8 +166,8 @@ public class Main {
         sb.append("CreateRoot:\n");
         sb.append("1. String path, String name\n");
         sb.append("2. String path, String name, int numberOfFilesConstraint\n");
-        sb.append("3. String path,String name, Configuration configuration<Long size,List<String> extenstions divided by ; >\n");
-        sb.append("4. String path, String name, Configuration configuration<Long size,List<String> extenstions divided by ;>, int numberOfFilesConstraint\n");
+        sb.append("3. String path,String name, Configuration configuration<Long size,Set<String> extenstions divided by ; >\n");
+        sb.append("4. String path, String name, Configuration configuration<Long size,Set<String> extenstions divided by ;>, int numberOfFilesConstraint\n");
         createRootOptions = sb.toString();
 
         sb = new StringBuilder();
