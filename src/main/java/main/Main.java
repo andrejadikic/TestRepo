@@ -27,6 +27,7 @@ public class Main {
             switch (opt){
                 case 1:
                     opt = getOption(4, createRootOptions);
+//                    createRoot(opt);
                     break;
                 default:
                     break;
@@ -70,6 +71,8 @@ public class Main {
         return drive;
     }
 
+//    private static void createRoot(int opt)
+
 
     // TODO na izlasku odraditi save config
     private static void menuOptions(){
@@ -96,11 +99,11 @@ public class Main {
         menuOptions =  sb.toString();
 
         sb = new StringBuilder();
-        sb.append("Mkdir:\n");
+        sb.append("Create root:\n");
         sb.append("1. String path, String name\n");
         sb.append("2. String path, String name, int numberOfFilesConstraint\n");
-        sb.append("3. String path,String name, Configuration configuration\n");
-        sb.append("4. String path, String name, Configuration configuration, int numberOfFilesConstraint\n");
+        sb.append("3. String path,String name, Configuration configuration<int size, list of excluded extensions divided by space>\n");
+        sb.append("4. String path, String name, Configuration configuration<int size, list of excluded extensions divided by space>, int numberOfFilesConstraint\n");
         createRootOptions = sb.toString();
     }
 
