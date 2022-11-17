@@ -30,27 +30,12 @@ public class Main {
             return;
         }
         menuOptions();
+        rootMaking();
         int opt;
         while ((opt = getOption(19, menuOptions)) != 19){
             String line;
             switch (opt){
                 case 1:
-                    opt = getOption(4, createRootOptions);
-                    line = sc.nextLine();
-                    try {
-                        switch (opt) {
-                            case 1 -> fileManager.createRoot(getStringString(line)[0], getStringString(line)[1]);
-                            case 2 -> fileManager.createRoot((String) getStringStringInt(line).get(0), (String) getStringStringInt(line).get(1), (Integer) getStringStringInt(line).get(2));
-                            case 3 -> fileManager.createRoot((String) getStringStringLongSet(line).get(0), (String) getStringStringLongSet(line).get(1),
-                                    new Configuration((Long) getStringStringLongSet(line).get(2),(Set<String>)getStringStringLongSet(line).get(3)));
-                            case 4 -> fileManager.createRoot((String) getStringStringLongSetInt(line).get(0),(String) getStringStringLongSetInt(line).get(1),new Configuration((Long) getStringStringLongSetInt(line).get(2),(Set<String>) getStringStringLongSetInt(line).get(3)),(Integer) getStringStringLongSetInt(line).get(4));
-                            default -> System.out.println("Invalid option!");
-                        }
-                    }catch (Exception e){
-                        System.out.println("Error during parsing!");
-                    }
-                    break;
-                case 2:
                     opt = getOption(8,mkdirOptions);
                     line = sc.nextLine();
                     try {
@@ -77,10 +62,11 @@ public class Main {
                         System.out.println("Error during parsing!");
                     }
                     break;
-                case 5:
+                case 4:
                     line = sc.nextLine();
                     fileManager.download(getStringString(line)[0],getStringString(line)[1]);
-                case 19:
+                    break;
+                case 18:
                     fileManager.saveConfig();
                     return;
                 default:
@@ -218,25 +204,24 @@ public class Main {
     // TODO na izlasku odraditi save config
     private static void menuOptions(){
         StringBuilder sb = new StringBuilder();
-        sb.append("1. create root\n");
-        sb.append("2. make directory\n");
-        sb.append("3. delete\n");
-        sb.append("4. move\n");
-        sb.append("5. download\n");
-        sb.append("6. upload\n");
-        sb.append("7. rename\n");
-        sb.append("8. search directory\n");
-        sb.append("9. search subdirectories\n");
-        sb.append("10. search all\n");
-        sb.append("11. filter by extension\n");
-        sb.append("12. search substring\n");
-        sb.append("13. does name exist\n");
-        sb.append("14. does list of names exist\n");
-        sb.append("15. get parent path\n");
-        sb.append("16. sort by\n");
-        sb.append("17. filter by data\n");
-        sb.append("18. filter by period\n");
-        sb.append("19. exit\n");
+        sb.append("1. make directory\n");
+        sb.append("2. delete\n");
+        sb.append("3. move\n");
+        sb.append("4. download\n");
+        sb.append("5. upload\n");
+        sb.append("6. rename\n");
+        sb.append("7. search directory\n");
+        sb.append("8. search subdirectories\n");
+        sb.append("9. search all\n");
+        sb.append("10. filter by extension\n");
+        sb.append("11. search substring\n");
+        sb.append("12. does name exist\n");
+        sb.append("13. does list of names exist\n");
+        sb.append("14. get parent path\n");
+        sb.append("15. sort by\n");
+        sb.append("16. filter by data\n");
+        sb.append("17. filter by period\n");
+        sb.append("18. exit\n");
         menuOptions =  sb.toString();
 
         sb = new StringBuilder();
@@ -267,6 +252,32 @@ public class Main {
 
         sb = new StringBuilder();
 
+    }
+
+    private static void rootMaking(){
+        int opt = getOption(4, createRootOptions);
+        boolean done = false;
+        String line;
+        while (!done){
+            line = sc.nextLine();
+            try {
+                switch (opt) {
+                    case 1 -> done = fileManager.createRoot(getStringString(line)[0], getStringString(line)[1]);
+                    case 2 -> done = fileManager.createRoot((String) getStringStringInt(line).get(0), (String) getStringStringInt(line).get(1), (Integer) getStringStringInt(line).get(2));
+                    case 3 -> done = fileManager.createRoot((String) getStringStringLongSet(line).get(0), (String) getStringStringLongSet(line).get(1),
+                            new Configuration((Long) getStringStringLongSet(line).get(2),(Set<String>)getStringStringLongSet(line).get(3)));
+                    case 4 -> done = fileManager.createRoot((String) getStringStringLongSetInt(line).get(0),(String) getStringStringLongSetInt(line).get(1),new Configuration((Long) getStringStringLongSetInt(line).get(2),(Set<String>) getStringStringLongSetInt(line).get(3)),(Integer) getStringStringLongSetInt(line).get(4));
+                    default -> {
+                        done = false;
+                        System.out.println("Invalid option!");
+                    }
+                }
+            }catch (Exception e){
+                done = false;
+                System.out.println("Error during parsing!");
+            }
+
+        }
     }
 
 }
