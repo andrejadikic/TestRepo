@@ -1,8 +1,12 @@
 package main;
+import Data.MyFile;
 import paket.Configuration;
 import paket.FileManager;
+import paket.Metadata;
 import paket.RepoManager;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -14,6 +18,7 @@ public class Main {
     private static String createRootOptions;
     private static String mkdirOptions;
     private static String filterOptions;
+    private static String searchOptionsCustom;
 
     private static Scanner sc;
     private static FileManager fileManager;
@@ -33,102 +38,162 @@ public class Main {
         rootMaking();
         int opt;
         while ((opt = getOption(19, menuOptions)) != 19){
-            String line;
-            switch (opt){
-                case 1:
-                    opt = getOption(8,mkdirOptions);
-                    line = sc.nextLine();
-                    try {
-                        switch (opt){
-                            case 1 -> fileManager.mkdir(getStringString(line)[0], getStringString(line)[1]);
-                            case 2 -> fileManager.mkdir((String) getStringList(line).get(0), (List<String>) getStringList(line).get(1));
-                            case 3 -> fileManager.mkdir((String) getStringListInt(line).get(0), (List<String>) getStringListInt(line).get(1),(Integer) getStringListInt(line).get(2));
-                            case 4 ->{
-                                List<Object> l = getStringStringIntBoolean(line);
-                                fileManager.mkdir((String) l.get(0), (String) l.get(1), (Integer) l.get(2), (boolean) l.get(3));
+            try {
+                String line;
+                switch (opt){
+                    case 1:
+                        opt = getOption(8,mkdirOptions);
+                        line = sc.nextLine();
+                        try {
+                            switch (opt){
+                                case 1 -> fileManager.mkdir(getStringString(line)[0], getStringString(line)[1]);
+                                case 2 -> fileManager.mkdir((String) getStringList(line).get(0), (List<String>) getStringList(line).get(1));
+                                case 3 -> fileManager.mkdir((String) getStringListInt(line).get(0), (List<String>) getStringListInt(line).get(1),(Integer) getStringListInt(line).get(2));
+                                case 4 ->{
+                                    List<Object> l = getStringStringIntBoolean(line);
+                                    fileManager.mkdir((String) l.get(0), (String) l.get(1), (Integer) l.get(2), (boolean) l.get(3));
+                                }
+                                case 5 ->{
+                                    List<Object> l = getStringStringIntInt(line);
+                                    fileManager.mkdir((String) l.get(0), (String) l.get(1), (Integer) l.get(2), (Integer) l.get(3));
+                                }
+                                case 6 -> fileManager.mkdir(line);
+                                case 7 -> fileManager.mkdir(List.of(line.split(";")));
+                                case 8 -> {
+                                    List<Object> l = getStringInt(line);
+                                    fileManager.mkdir((String) l.get(0), (Integer) l.get(1));
+                                }
+                                default -> System.out.println("Invalid option!");
                             }
-                            case 5 ->{
-                                List<Object> l = getStringStringIntInt(line);
-                                fileManager.mkdir((String) l.get(0), (String) l.get(1), (Integer) l.get(2), (Integer) l.get(3));
-                            }
-                            case 6 -> fileManager.mkdir(line);
-                            case 7 -> fileManager.mkdir(List.of(line.split(";")));
-                            case 8 -> {
-                                List<Object> l = getStringInt(line);
-                                fileManager.mkdir((String) l.get(0), (Integer) l.get(1));
-                            }
+                        }catch (Exception e){
+                            System.out.println("Error during parsing!");
                         }
-                    }catch (Exception e){
-                        System.out.println("Error during parsing!");
-                    }
-                    break;
-                case 2:
-                    System.out.println("String path <relative>");
-                    line = sc.nextLine();
-                    System.out.println("Deleted: " + fileManager.delete(line));
-                    break;
-                case 3:
-                    System.out.println("String oldPath, String newPath <parent directory>");
-                    line = sc.nextLine();
-                    String[] st = getStringString(line);
-                    fileManager.move(st[0],st[1]);
-                    break;
-                case 4:
-                    System.out.println("String item <path>, String destination <local directory path>");
-                    line = sc.nextLine();
-                    fileManager.download(getStringString(line)[0],getStringString(line)[1]);
-                    break;
-                case 5:
-                    System.out.println("String item <local path>, String destination <relative directory path>");
-                    line = sc.nextLine();
-                    String[] str = getStringString(line);
-                    fileManager.upload(str[0],str[1]);
-                    break;
-                case 6:
-                    System.out.println("String path, String newName");
-                    line = sc.nextLine();
-                    String[] sa = getStringString(line);
-                    fileManager.rename(sa[0],sa[1]);
-                    break;
-                case 7:
-                    System.out.println("String path <relative dir path>");
-                    System.out.println(fileManager.searchDir(sc.nextLine()));
-                    break;
-                case 8:
-                    System.out.println("String path <relative dir path>");
-                    System.out.println(fileManager.searchSubDir(sc.nextLine()));
-                    break;
-                case 9:
-                    System.out.println("String path <relative dir path>");
-                    System.out.println(fileManager.searchAll(sc.nextLine()));
-                    break;
-                case 10:
-                    System.out.println("String extension");
-                    System.out.println(fileManager.filterByExt(sc.nextLine()));
-                    break;
-                case 11:
-                    System.out.println("String substring");
-                    System.out.println(fileManager.searchSubstring(sc.nextLine()));
-                    break;
-                case 12:
-                    System.out.println("String path, String name");
-                    String[] s12 = getStringString(sc.nextLine());
-                    System.out.println(fileManager.existName(s12[0], s12[1]));
-                    break;
-                case 13:
-                    System.out.println("String path, List<String> names");
-                    List<Object> s13 = getStringList(sc.nextLine());
-                    System.out.println(fileManager.existListOfName((String) s13.get(0), (List<String>) s13.get(1)));
-                case 14:
-                    System.out.println("String name");
-                    System.out.println(fileManager.getParentPath(sc.nextLine()));
-                    break;
-                case 18:
-                    fileManager.saveConfig();
-                    return;
-                default:
-                    break;
+                        break;
+                    case 2:
+                        System.out.println("String path <relative>");
+                        line = sc.nextLine();
+                        System.out.println("Deleted: " + fileManager.delete(line));
+                        break;
+                    case 3:
+                        System.out.println("String oldPath, String newPath <parent directory>");
+                        line = sc.nextLine();
+                        String[] st = getStringString(line);
+                        fileManager.move(st[0],st[1]);
+                        break;
+                    case 4:
+                        System.out.println("String item <path>, String destination <local directory path>");
+                        line = sc.nextLine();
+                        fileManager.download(getStringString(line)[0],getStringString(line)[1]);
+                        break;
+                    case 5:
+                        System.out.println("String item <local path>, String destination <relative directory path>");
+                        line = sc.nextLine();
+                        String[] str = getStringString(line);
+                        fileManager.upload(str[0],str[1]);
+                        break;
+                    case 6:
+                        System.out.println("String path, String newName");
+                        line = sc.nextLine();
+                        String[] sa = getStringString(line);
+                        fileManager.rename(sa[0],sa[1]);
+                        break;
+                    case 7:
+                        System.out.println("String path <relative dir path>");
+                        System.out.println(fileManager.searchDir(sc.nextLine()));
+                        break;
+                    case 8:
+                        System.out.println("String path <relative dir path>");
+                        System.out.println(fileManager.searchSubDir(sc.nextLine()));
+                        break;
+                    case 9:
+                        System.out.println("String path <relative dir path>");
+                        System.out.println(fileManager.searchAll(sc.nextLine()));
+                        break;
+                    case 10:
+                        opt = getOption(8,filterOptions);
+                        line = sc.nextLine();
+                        try {
+                            switch (opt) {
+                                case 1 -> {
+                                    String[] filterargs = getStringString(line);
+                                    System.out.println(fileManager.filterByExt(filterargs[0], filterargs[1]));
+                                }
+                                case 2 -> System.out.println(fileManager.filterByExt(line));
+                                default -> System.out.println("Invalid option!");
+                            }
+                        }catch (Exception e){
+                            System.out.println("Error during parsing!");
+                        }
+                        break;
+                    case 11:
+                        System.out.println("String substring");
+                        System.out.println(fileManager.searchSubstring(sc.nextLine()));
+                        break;
+                    case 12:
+                        System.out.println("String path, String name");
+                        String[] s12 = getStringString(sc.nextLine());
+                        System.out.println(fileManager.existName(s12[0], s12[1]));
+                        break;
+                    case 13:
+                        System.out.println("String path, List<String> names");
+                        List<Object> s13 = getStringList(sc.nextLine());
+                        System.out.println(fileManager.existListOfName((String) s13.get(0), (List<String>) s13.get(1)));
+                    case 14:
+                        System.out.println("String name");
+                        System.out.println(fileManager.getParentPath(sc.nextLine()));
+                        break;
+                    case 15:
+                        opt = getOption(3, searchOptionsCustom);
+                        System.out.println("String path, Metadata<FULL_NAME, NAME, SIZE, DATE_MODIFIED, DATE_CREATED, EXTENSION>");
+                        List<MyFile> files = new ArrayList<>();
+                        String[] s15 = getStringString(sc.nextLine());
+                        boolean flag = true;
+                        switch (opt) {
+                            case 1 -> files = fileManager.searchDir(s15[0]);
+                            case 2 -> files = fileManager.searchSubDir(s15[0]);
+                            case 3 -> files = fileManager.searchAll(s15[0]);
+                            default -> flag = false;
+                        }
+                        if(flag){
+                            fileManager.sortBy(files, Metadata.valueOf(s15[1].trim().toUpperCase()));
+                            System.out.println(files);
+                        }
+                        break;
+                    case 16:
+                        opt = getOption(3, searchOptionsCustom);
+                        System.out.println("String path, SET divided by ; of Metadata<FULL_NAME, NAME, SIZE, DATE_MODIFIED, DATE_CREATED, EXTENSION>");
+                        List<MyFile> files1 = new ArrayList<>();
+                        List<Object> s16 =  getStringList(sc.nextLine());
+                        boolean flag1 = true;
+                        switch (opt) {
+                            case 1 -> files1 = fileManager.searchDir((String) s16.get(0));
+                            case 2 -> files1 = fileManager.searchSubDir((String) s16.get(0));
+                            case 3 -> files1 = fileManager.searchAll((String) s16.get(0));
+                            default -> flag1 = false;
+                        }
+                        if(flag1){
+                            Set<Metadata> set = new HashSet<>();
+                            for(String md : (List<String>)s16.get(1))
+                                set.add(Metadata.valueOf(md.trim().toUpperCase()));
+                            System.out.println(fileManager.filterData(files1, set));
+                        }
+                        break;
+                    case 17:
+                        System.out.println("String path, StartDate in format yyyy-MM-dd HH:mm, EndDate in format yyyy-MM-dd HH:mm, boolean modified");
+                        String[] s17 = sc.nextLine().split(",");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        System.out.println(fileManager.filterByPeriod(s17[0],LocalDateTime.parse(s17[1], formatter),LocalDateTime.parse(s17[2], formatter), s17[3].trim().equalsIgnoreCase("true")));
+                        break;
+                    case 18:
+                        fileManager.saveConfig();
+                        return;
+                    default:
+                        break;
+                }
+            }catch (Exception e){
+                System.out.println("Error occurred, please try again!");
             }
+
         }
 
     }
@@ -182,6 +247,11 @@ public class Main {
         filterOptions = sb.toString();
 
         sb = new StringBuilder();
+        sb.append("1. search directory\n");
+        sb.append("2. search subdirectories\n");
+        sb.append("3. search all\n");
+        searchOptionsCustom = sb.toString();
+
 
     }
 
