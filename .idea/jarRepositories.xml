@@ -7,39 +7,19 @@
       <option name="url" value="https://maven.pkg.github.com/Kovelja009/FileManager" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="github_01" />
-      <option name="name" value="GitHub Kovelja009 Apache Maven Packages" />
-      <option name="url" value="https://maven.pkg.github.com/Kovelja009/GoogleDriveImpl" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="github_02" />
-      <option name="name" value="GitHub Kovelja009 Apache Maven Packages" />
-      <option name="url" value="https://maven.pkg.github.com/Kovelja009/GoogleDriveImpl" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="github_3" />
-      <option name="name" value="GitHub andrejadikic Apache Maven Packages" />
-      <option name="url" value="https://maven.pkg.github.com/andrejadikic/FileLocalImpl" />
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="github_01" />
-      <option name="name" value="GitHub Kovelja009 Apache Maven Packages" />
-      <option name="url" value="https://maven.pkg.github.com/Kovelja009/FileManager" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="github_1" />
-      <option name="name" value="GitHub andrejadikic Apache Maven Packages" />
-      <option name="url" value="https://maven.pkg.github.com/andrejadikic/FileLocalImpl" />
+      <option name="name" value="GitHub Kovelja009 Apache Maven Packages other" />
+      <option name="url" value="https://maven.pkg.github.com/Kovelja009/GoogleDriveImpl" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="jboss.community" />
-      <option name="name" value="JBoss Community repository" />
-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="github" />
@@ -55,6 +35,66 @@
       <option name="id" value="github" />
       <option name="name" value="GitHub andrejadikic Apache Maven Packages" />
       <option name="url" value="https://maven.pkg.github.com/andrejadikic/FileLocalImpl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_01" />
+      <option name="name" value="GitHub Kovelja009 Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/Kovelja009/GoogleDriveImpl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_02" />
+      <option name="name" value="GitHub Kovelja009 Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/Kovelja009/GoogleDriveImpl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_3" />
+      <option name="name" value="GitHub andrejadikic Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/andrejadikic/FileLocalImpl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github" />
+      <option name="name" value="GitHub Kovelja009 Apache Maven Packages other" />
+      <option name="url" value="https://maven.pkg.github.com/Kovelja009/GoogleDriveImpl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_google_drive" />
+      <option name="name" value="GitHub Kovelja009 Apache Maven Packages other" />
+      <option name="url" value="https://maven.pkg.github.com/Kovelja009/GoogleDriveImpl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_01" />
+      <option name="name" value="GitHub andrejadikic Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/andrejadikic/FileLocalImpl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_01" />
+      <option name="name" value="GitHub Kovelja009 Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/Kovelja009/FileManager" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_1" />
+      <option name="name" value="GitHub andrejadikic Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/andrejadikic/FileLocalImpl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_00" />
+      <option name="name" value="GitHub Kovelja009 Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/Kovelja009/FileManager" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_local_file" />
+      <option name="name" value="GitHub andrejadikic Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/andrejadikic/FileLocalImpl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="github_specification" />
+      <option name="name" value="GitHub Kovelja009 Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/Kovelja009/FileManager" />
     </remote-repository>
   </component>
 </project>

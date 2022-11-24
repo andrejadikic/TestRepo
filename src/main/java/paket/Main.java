@@ -1,9 +1,5 @@
-package main;
+package paket;
 import Data.MyFile;
-import paket.Configuration;
-import paket.FileManager;
-import paket.Metadata;
-import paket.RepoManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
